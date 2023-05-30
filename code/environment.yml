@@ -1,0 +1,8 @@
+name: crs-questions
+channels:
+  - conda-forge
+  - default
+dependencies:
+  - flake8
+  - black
+  - pandas
