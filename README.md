@@ -1,19 +1,7 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Generating Usage-related Questions for Preference Elicitation in Conversational Recommender Systems](#generating-usage-related-questions-for-preference-elicitation-in-conversational-recommender-systems)
-  - [Summary](#summary)
-  - [Data](#data)
-    - [Dataset Structure](#dataset-structure)
-  - [Repository Structure](#repository-structure)
-  - [Obtaining the dataset](#obtaining-the-dataset)
-    - [Alternative](#alternative)
-  - [Contact](#contact)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # Generating Usage-related Questions for Preference Elicitation in Conversational Recommender Systems
+
+<!-- START doctoc generated TOC-->
+<!-- END doctoc generated TOC-->
 
 ## Summary
 
