@@ -24,7 +24,7 @@ We are not allowed to re-distribute the [Amazon review collection](https://nijia
 
 ### Dataset Structure
 
-The dataset contains 1100 reviews with matching implicit questions over 11 categories of products. It is split evenly into train (80%) and test (20%) files.
+The dataset contains 1083 reviews with matching implicit questions over 11 categories of products. It is split evenly into train (80%) and test (20%) files.
 The test file additionally contains 15 questions in the `Birdfeeder` category that is not found in train dataset.
 
 Since the sentences mentioning item usage were extracted heuristically, not all reviews in the dataset have valid questions associated with them. Those are marked as `n/a`.
