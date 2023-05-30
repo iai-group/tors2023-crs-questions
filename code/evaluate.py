@@ -48,8 +48,7 @@ class Evaluation:
     def _get_valid_rows(self, df, refrence_columns, hypotheses_column):
         """Get valid rows."""
         return df[
-            df[refrence_columns].notnull().all(axis=1)
-            & df[hypotheses_column].notnull()
+            df[refrence_columns].notnull().all(axis=1) & df[hypotheses_column].notnull()
         ]
 
     def compute_generation_metrics(
@@ -63,19 +62,13 @@ class Evaluation:
         df = self._get_valid_rows(df, refrence_columns, hypotheses_column)
 
         references = [df[ref].tolist() for ref in refrence_columns]
-        return self.nlgeval.compute_metrics(
-            references, df[hypotheses_column].tolist()
-        )
+        return self.nlgeval.compute_metrics(references, df[hypotheses_column].tolist())
 
     def confusion_matrix(self, baseline_column, model_column):
         """Confusion matrix."""
-        return confusion_matrix(
-            self._df[baseline_column], self._df[model_column]
-        )
+        return confusion_matrix(self._df[baseline_column], self._df[model_column])
 
-    def statistical_significance_classification(
-        self, baseline_column, model_column
-    ):
+    def statistical_significance_classification(self, baseline_column, model_column):
         """Statistical significance."""
         table = self.confusion_matrix(baseline_column, model_column)
         result = mcnemar(table, exact=True)
@@ -88,9 +81,7 @@ class Evaluation:
     ):
         """Statistical significance."""
         data = self.dataframe.index.tolist()
-        statistic = self.compute_generation_metrics(
-            refrence_columns, hypotheses_column
-        )
+        statistic = self.compute_generation_metrics(refrence_columns, hypotheses_column)
 
 
 def parse_args() -> argparse.Namespace:
@@ -104,13 +95,11 @@ def main(args: argparse.Namespace) -> None:
     eval = Evaluation("data/test_results_all_models.csv")
 
     samples = [
-        eval.dataframe.sample(len(eval.dataframe), replace=True)
-        for _ in range(1000)
+        eval.dataframe.sample(len(eval.dataframe), replace=True) for _ in range(1000)
     ]
 
     results = {
-        metric: {hypo: [] for hypo in GENERATED_QUESTION_COLUMNS}
-        for metric in METRICS
+        metric: {hypo: [] for hypo in GENERATED_QUESTION_COLUMNS} for metric in METRICS
     }
 
     for hypo in GENERATED_QUESTION_COLUMNS:
