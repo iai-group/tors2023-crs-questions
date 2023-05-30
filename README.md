@@ -53,10 +53,10 @@ Top 3 rows from the training dataset:
 This repository is structured as follows:
 
   - `dataset/`: Train/test datasets collected via crowdsourcing. **NB! The files do not contain the original review text and extracted sentences.**
-  - `outputs/`: The outputs of all four models.
+  - `outputs/`: The outputs of all four models. **TBD**
   - `code/make_dataset.py`: A Python script for populating the dataset with original review text and extracted sentences.
-  - `code/evaluate.py`: A Python script for evaluating the outputs of the models.
-  - `code/models/`: Folder containing the code for the four models, both training and inference.
+  - `code/evaluation.py`: A Python script for evaluating the outputs of the models. **TBD**
+  - `code/models/`: Folder containing the code for the four models, both training and inference. **TBD**
 
 ## Obtaining the dataset
 

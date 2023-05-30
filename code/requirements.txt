@@ -1,0 +1,13 @@
+flake8
+black
+jupyter
+numpy
+pandas
+tqdm
+torchaudio
+torchvision
+torchaudio
+pytorch-lightning
+transformers
+sentencepiece
+git+https://github.com/Maluuba/nlg-eval.git@master
