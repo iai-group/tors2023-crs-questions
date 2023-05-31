@@ -10,6 +10,7 @@
 - [Repository Structure](#repository-structure)
 - [Obtaining the dataset](#obtaining-the-dataset)
   - [Alternative](#alternative)
+- [Running question generation script](#running-question-generation-script)
 - [Contact](#contact)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
