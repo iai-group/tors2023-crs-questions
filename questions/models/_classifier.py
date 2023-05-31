@@ -73,7 +73,7 @@ class Classifier:
         result, model_outputs, wrong_predictions = self._model.eval_model(
             eval_df
         )
-        return result
+        return (model_outputs[:, 1] > model_outputs[:, 0]) * 1
 
     def save(self, path: str):
         """Save the classifier.
@@ -92,3 +92,5 @@ if __name__ == "__main__":
     classifier.train(train_data)
 
     pprint(classifier.eval(eval_data))
+
+# %%
