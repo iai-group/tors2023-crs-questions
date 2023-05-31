@@ -51,18 +51,18 @@ Top 3 rows from the training dataset:
 
 This repository is structured as follows:
 
-  - `dataset/`: Train/test datasets collected via crowdsourcing. **NB! The files do not contain the original review text and extracted sentences.**
-  - `outputs/`: The outputs of all four models. **TBD**
-  - `code/make_dataset.py`: A Python script for populating the dataset with original review text and extracted sentences.
-  - `code/evaluation.py`: A Python script for evaluating the outputs of the models. **TBD**
-  - `code/models/`: Folder containing the code for the four models, both training and inference. **TBD**
+  - `data/`: Train/test datasets collected via crowdsourcing. **NB! The files do not contain the original review text and extracted sentences.**
+  - `model_outputs/`: The outputs of all four models. **TBD**
+  - `questions/make_dataset.py`: A Python script for populating the dataset with original review text and extracted sentences.
+  - `questions/evaluate.py`: A Python script for evaluating the outputs of the models. **TBD**
+  - `questions/models/`: Folder containing the code for the four models, both training and inference. **TBD**
 
 ## Obtaining the dataset
 
 To obtain the full dataset, use command:
 
 ```bash
-python -m code.make_dataset --path <path_to_amazon_collection_folder>
+python -m questions.make_dataset --path <path_to_amazon_collection_folder>
 ```
 
 The script expects files `Patio_Lawn_and_Garden.json.gz`, `Home_and_Kitchen.json.gz`, and `Sports_and_Outdoors.json.gz` to be present in the `<path_to_amazon_collection_folder>`. It parses through the files and populates the datasets with the original review and sentence texts.
@@ -71,6 +71,23 @@ The outputs are saved as `train_full.csv` and `test_full.csv` in the dataset fol
 ### Alternative
 
 Alternatively, you can email Ivica Kostric at <ivica.kostric@uis.no> or Krisztian Balog at <krisztian.balog@uis.no> to obtain the full dataset.
+
+
+## Running question generation script
+
+To run the question generation script, use command:
+
+```bash
+python -m questions.generate --model <model_name> --dataset <dataset_path>
+```
+
+The script expects the following arguments:
+
+  - `model`: The name of the model to use. Possible values are `tqg`, `nqg`.
+  - `dataset`: Path to the dataset file.
+  - `output`: Path to the output file. If not specified, the model name is used.
+  - `tqg_use_classifier` (only for `tqg`): Whether to use the classifier prior to generating questions. Possible values are `True`, `False`. Default is `False`.
+  - `nqg_use_review` (only for `nqg`): Whether to use the review text as input to the model. Possible values are `True`, `False`. Default is `False`.
 
 ## Contact
 

@@ -17,7 +17,7 @@ REVIEW_FILENAMES = {
     "Sports_and_Outdoors.json.gz": 12980837,
 }
 
-DATASET_PATH = "dataset/"
+DATASET_PATH = "data/"
 
 
 def get_absolute_path(path: str) -> str:

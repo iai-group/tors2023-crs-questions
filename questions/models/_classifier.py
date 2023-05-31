@@ -1,6 +1,6 @@
-# %%
 import logging
 from pprint import pprint
+from typing import Dict, List
 
 import pandas as pd
 from simpletransformers.classification import (
@@ -8,8 +8,8 @@ from simpletransformers.classification import (
     ClassificationModel,
 )
 
-MODEL = "roberta"
-MODEL_SIZE = "base"
+MODEL_PATH = "roberta-base"
+MODEL_TYPE = "roberta"
 
 logging.basicConfig(level=logging.INFO)
 classifier_logger = logging.getLogger("classifier")
@@ -31,8 +31,8 @@ def load_data(path: str) -> pd.DataFrame:
 class Classifier:
     def __init__(
         self,
-        model: str = MODEL,
-        model_size: str = MODEL_SIZE,
+        model_path: str = None,
+        model_type: str = MODEL_TYPE,
         cuda_device: int = -1,
     ):
         """Classifier for TQG.
@@ -47,11 +47,18 @@ class Classifier:
         )
 
         self._model = ClassificationModel(
-            model,
-            f"{model}-{model_size}",
+            model_type,
+            model_path or MODEL_PATH,
             cuda_device=cuda_device,
             args=self._model_args,
         )
+
+        if model_path is None:
+            classifier_logger.info(
+                "No model path specified. Finetuning default model."
+            )
+            self.train(load_data("data/train.csv"))
+            pprint(self.eval(load_data("data/test.csv")))
 
     def train(self, train_df: pd.DataFrame):
         """Train the classifier.
@@ -61,11 +68,11 @@ class Classifier:
         """
         self._model.train_model(train_df)
 
-    def eval(self, eval_df: pd.DataFrame):
+    def eval(self, eval_df: pd.DataFrame) -> Dict[str, float]:
         """Evaluate the classifier.
 
         Args:
-            eval_df: Evaluation data. Should have columns "text" and "labels".
+            eval_df: Evaluation data. Should have columns "text".
 
         Returns:
             Evaluation results.
@@ -73,7 +80,18 @@ class Classifier:
         result, model_outputs, wrong_predictions = self._model.eval_model(
             eval_df
         )
-        return (model_outputs[:, 1] > model_outputs[:, 0]) * 1
+        return result
+
+    def predict(self, to_predict: List[str]) -> List[int]:
+        """Predict labels for the given data.
+
+        Args:
+            to_predict: Data to predict labels for.
+
+        Returns:
+            Predicted labels.
+        """
+        return self._model.predict(to_predict)[0]
 
     def save(self, path: str):
         """Save the classifier.
@@ -82,15 +100,3 @@ class Classifier:
             path: Path to save the classifier to.
         """
         self._model.save_model(path)
-
-
-if __name__ == "__main__":
-    train_data = load_data("data/train.csv")
-    eval_data = load_data("data/test.csv")
-
-    classifier = Classifier()
-    classifier.train(train_data)
-
-    pprint(classifier.eval(eval_data))
-
-# %%

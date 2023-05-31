@@ -26,6 +26,13 @@ def parse_args() -> argparse.Namespace:
         default="nqg",
     )
     parser.add_argument(
+        "--dataset",
+        "-d",
+        type=str,
+        default="data/test.csv",
+        help="Path to the input CSV file.",
+    )
+    parser.add_argument(
         "--output",
         "-o",
         type=str,
@@ -41,13 +48,6 @@ def parse_args() -> argparse.Namespace:
         "--nqg_use_review",
         action="store_true",
         help="Use review text for NQG.",
-    )
-    parser.add_argument(
-        "--path",
-        "-p",
-        type=str,
-        default="dataset/test.csv",
-        help="Path to the input CSV file.",
     )
     return parser.parse_args()
 
@@ -67,8 +67,9 @@ def main(args: argparse.Namespace) -> None:
     df = pd.read_csv(args.path)
     df["question"] = model.generate_questions(df)
 
-    path = 
-    df[["id", "question"]].to_csv(f"outputs/{args.model}.csv", index=False)
+    df[["id", "question"]].to_csv(
+        f"outputs/{args.output or args.model}.csv", index=False
+    )
 
 
 if __name__ == "__main__":

@@ -1,4 +1,3 @@
-# %%
 import pandas as pd
 
 from questions.models._classifier import Classifier
@@ -14,10 +13,9 @@ class TQG:
             use_classifier: Whether to use classifier before generating
               questions.
         """
-        if use_classifier:
-            self.classifier = Classifier()
+        self.classifier = Classifier() if use_classifier else None
 
-    def get_question(self, category: str, sentence: str) -> str:
+    def get_question(self, category: str, sentence: str, label: int = 1) -> str:
         """Get pattern for TQG.
 
         Args:
@@ -28,7 +26,7 @@ class TQG:
             Question.
         """
         question_part = sentence.lower().split(" for ")
-        if len(question_part) == 0:
+        if len(question_part) == 0 or label == 0:
             return "n/a"
 
         question_part = " for ".join(question_part[1:])
@@ -42,15 +40,15 @@ class TQG:
         Returns:
             Outputs.
         """
-        return df[["category", "sentence"]].apply(
-            lambda row: self.get_question(*row), axis=1
-        )
+        columns = ["category", "sentence"]
+        if self.classifier is not None:
+            df["label"] = self.classifier.predict(df["sentence"].tolist())
+            columns.append("label")
+        return df[columns].apply(lambda row: self.get_question(*row), axis=1)
 
 
 if __name__ == "__main__":
     question_generator = TQG()
-    df = pd.read_csv("/home/stud/ivicak/bhome/masters/data/test.csv")
+    df = pd.read_csv("data/test.csv")
     outputs = question_generator.generate_questions(df)
     print(outputs)
-
-# %%
