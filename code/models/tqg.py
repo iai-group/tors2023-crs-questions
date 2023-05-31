@@ -1,6 +1,7 @@
-from typing import Any
+from _classifier import Classifier
 
 
 class TQG:
-    def __init__(self, classifier: Any = None) -> None:
-        self._classifier = classifier
+    def __init__(self, use_classifier: bool = False) -> None:
+        if use_classifier:
+            self.classifier = Classifier()
