@@ -1,3 +1,5 @@
+"""Template-based question generator."""
+
 import pandas as pd
 
 from questions.models._classifier import Classifier
@@ -45,10 +47,3 @@ class TQG:
             df["label"] = self.classifier.predict(df["sentence"].tolist())
             columns.append("label")
         return df[columns].apply(lambda row: self.get_question(*row), axis=1)
-
-
-if __name__ == "__main__":
-    question_generator = TQG()
-    df = pd.read_csv("data/test.csv")
-    outputs = question_generator.generate_questions(df)
-    print(outputs)

@@ -1,3 +1,5 @@
+"""Classifier for TQG."""
+
 import logging
 from pprint import pprint
 from typing import Dict, List
@@ -8,24 +10,14 @@ from simpletransformers.classification import (
     ClassificationModel,
 )
 
+from questions.util import file_io
+
 MODEL_PATH = "roberta-base"
 MODEL_TYPE = "roberta"
 
 logging.basicConfig(level=logging.INFO)
 classifier_logger = logging.getLogger("classifier")
 classifier_logger.setLevel(logging.WARNING)
-
-
-def load_data(path: str) -> pd.DataFrame:
-    """Load data from CSV.
-
-    Args:
-        path: Path to CSV.
-    """
-    df = pd.read_csv(path)
-    df["labels"] = df.question1.notna().astype(int)
-    df["text"] = df.sentence
-    return df[["text", "labels"]]
 
 
 class Classifier:
@@ -57,8 +49,8 @@ class Classifier:
             classifier_logger.info(
                 "No model path specified. Finetuning default model."
             )
-            self.train(load_data("data/train.csv"))
-            pprint(self.eval(load_data("data/test.csv")))
+            self.train(file_io.get_dataframe_from_csv("data/train.csv"))
+            pprint(self.eval(file_io.get_dataframe_from_csv("data/test.csv")))
 
     def train(self, train_df: pd.DataFrame):
         """Train the classifier.

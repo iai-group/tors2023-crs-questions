@@ -3,10 +3,9 @@
 import argparse
 from enum import Enum
 
-import pandas as pd
-
 from questions.models.nqg import NQG
 from questions.models.tqg import TQG
+from questions.util import file_io
 
 
 class ModelType(Enum):
@@ -62,9 +61,9 @@ def main(args: argparse.Namespace) -> None:
     if model_type == ModelType.TQG:
         model = TQG(args.tqg_use_classifier)
     elif model_type == ModelType.NQG:
-        model = NQG(args.nqg_use_review)
+        model = NQG(use_reviews=args.nqg_use_review)
 
-    df = pd.read_csv(args.path)
+    df = file_io.get_dataframe_from_csv(args.dataset)
     df["question"] = model.generate_questions(df)
 
     df[["id", "question"]].to_csv(
