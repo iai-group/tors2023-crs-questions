@@ -23,7 +23,7 @@ class NQG:
         self,
         model_path: str = None,
         use_reviews: bool = False,
-        cuda_device: int = -1,
+        cuda_device: int = 5,
     ) -> None:
         """Neural Question Generation (NQG) model.
 
@@ -33,7 +33,16 @@ class NQG:
         """
         self.use_reviews = use_reviews
 
-        model_args = T5Args(num_train_epochs=3)
+        model_args = T5Args(
+            num_train_epochs=3,
+            evaluate_generated_text=True,
+            overwrite_output_dir=True,
+            do_sample=True,
+            top_k=25,
+            top_p=0.90,
+            evaluate_during_training_verbose=True,
+            evaluate_during_training=True,
+        )
         self._model = T5Model(
             "t5",
             model_path or MODEL_PATH,
@@ -42,9 +51,10 @@ class NQG:
         )
 
         if model_path is None:
-            self.train(self.get_dataframe(TRAINING_DATA_PATH))
-            results = self.eval(self.get_dataframe(EVALUATION_DATA_PATH))
+            train_df = self.get_dataframe(TRAINING_DATA_PATH)
+            self.train(train_df, eval_data=train_df.copy())
 
+            results = self.eval(self.get_dataframe(EVALUATION_DATA_PATH))
             pprint(results)
 
     def get_dataframe(self, path: str) -> pd.DataFrame:
@@ -73,17 +83,17 @@ class NQG:
             var_name="source",
             value_name="target_text",
         )
-        df["prefix"] = "generate question: "
+        df["prefix"] = "generate question"
         df["target_text"] = df["target_text"].fillna("n/a").astype(str)
         return df
 
-    def train(self, train_df: pd.DataFrame) -> None:
+    def train(self, train_df: pd.DataFrame, **kwargs) -> None:
         """Train the model.
 
         Args:
             train_df: Training data.
         """
-        self._model.train_model(train_df)
+        self._model.train_model(train_df, **kwargs)
 
     def eval(self, eval_df: pd.DataFrame) -> Dict[str, float]:
         """Evaluate the model.
@@ -105,7 +115,8 @@ class NQG:
         Returns:
             Predicted question.
         """
-        return self._model.predict([to_predict])[0]
+        to_predict = [f"generate question: {text}" for text in to_predict]
+        return self._model.predict(to_predict)
 
     def generate_questions(self, df: pd.DataFrame) -> pd.DataFrame:
         """Generate outputs for NQG.
