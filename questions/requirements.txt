@@ -11,3 +11,4 @@ pytorch-lightning
 transformers
 sentencepiece
 git+https://github.com/Maluuba/nlg-eval.git@master
+simpletransformers

@@ -1,2 +1,6 @@
 # Python
 *.pyc
+
+cache_dir/
+outputs/
+runs/
