@@ -5,17 +5,18 @@ from pprint import pprint
 from typing import Dict, List
 
 import pandas as pd
+from questions.util import file_io
 from simpletransformers.classification import (
     ClassificationArgs,
     ClassificationModel,
 )
 
-from questions.util import file_io
-
 MODEL_PATH = "roberta-base"
 MODEL_TYPE = "roberta"
 
-logging.basicConfig(level=logging.INFO)
+TRAINING_DATA_PATH = "data/train.csv"
+EVALUATION_DATA_PATH = "data/test.csv"
+
 classifier_logger = logging.getLogger("classifier")
 classifier_logger.setLevel(logging.WARNING)
 
@@ -25,23 +26,22 @@ class Classifier:
         self,
         model_path: str = None,
         model_type: str = MODEL_TYPE,
-        cuda_device: int = -1,
     ):
         """Classifier for TQG.
 
         Args:
             model: Model to use.
             model_size: Model size to use.
-            cuda_device: CUDA device to use. -1 means no CUDA. Defaults to -1.
         """
         self._model_args = ClassificationArgs(
-            num_train_epochs=3, overwrite_output_dir=True
+            num_train_epochs=3,
+            overwrite_output_dir=True,
+            output_dir=f"outputs/{MODEL_PATH}",
         )
 
         self._model = ClassificationModel(
             model_type,
             model_path or MODEL_PATH,
-            cuda_device=cuda_device,
             args=self._model_args,
         )
 
@@ -49,8 +49,12 @@ class Classifier:
             classifier_logger.info(
                 "No model path specified. Finetuning default model."
             )
-            self.train(file_io.get_dataframe_from_csv("data/train.csv"))
-            pprint(self.eval(file_io.get_dataframe_from_csv("data/test.csv")))
+            self.train(file_io.get_dataframe_from_csv(TRAINING_DATA_PATH))
+
+            results = self.eval(
+                file_io.get_dataframe_from_csv(EVALUATION_DATA_PATH)
+            )
+            pprint(results)
 
     def train(self, train_df: pd.DataFrame):
         """Train the classifier.

@@ -17,6 +17,10 @@ class TQG:
         """
         self.classifier = Classifier() if use_classifier else None
 
+    def __str__(self) -> str:
+        """String representation of the model."""
+        return f"TQG{'_classifier' if self.classifier is not None else ''}"
+
     def get_question(self, category: str, sentence: str, label: int = 1) -> str:
         """Get pattern for TQG.
 
