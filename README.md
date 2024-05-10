@@ -102,16 +102,14 @@ The script expects the following arguments:
 ## Citation
 
 ```bibtex
-@article{10.1145/3629981,
-author = {Kostric, Ivica and Balog, Krisztian and Radlinski, Filip},
-title = {Generating Usage-related Questions for Preference Elicitation in Conversational Recommender Systems},
-year = {2024},
-publisher = {Association for Computing Machinery},
-volume = {2},
-number = {2},
-journal = {ACM Trans. Recomm. Syst.},
-articleno = {12},
-numpages = {24},
+@article{Kostric:2023:TORS,
+  author  = {Kostric, Ivica and Balog, Krisztian and Radlinski, Filip},
+  title   = {Generating Usage-Related Questions for Preference Elicitation in Conversational Recommender Systems},
+  year    = {2023},
+  url     = {https://krisztianbalog.com/files/tors2023-crs-questions.pdf},
+  doi     = {10.1145/3629981},
+  github  = {https://github.com/iai-group/tors2023-crs-questions},
+  journal = {ACM Transactions on Recommender Systems}
 }
 ```
 
