@@ -106,7 +106,7 @@ The script expects the following arguments:
   author  = {Kostric, Ivica and Balog, Krisztian and Radlinski, Filip},
   title   = {Generating Usage-Related Questions for Preference Elicitation in Conversational Recommender Systems},
   year    = {2023},
-  url     = {https://krisztianbalog.com/files/tors2023-crs-questions.pdf},
+  url     = {https://krisztianbalog.com/files/tors2024-crs-questions.pdf},
   doi     = {10.1145/3629981},
   github  = {https://github.com/iai-group/tors2023-crs-questions},
   journal = {ACM Transactions on Recommender Systems}
