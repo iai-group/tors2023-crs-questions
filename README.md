@@ -98,6 +98,22 @@ The script expects the following arguments:
 
 **TBD**
 
+## Citation
+
+```bibtex
+@article{10.1145/3629981,
+author = {Kostric, Ivica and Balog, Krisztian and Radlinski, Filip},
+title = {Generating Usage-related Questions for Preference Elicitation in Conversational Recommender Systems},
+year = {2024},
+publisher = {Association for Computing Machinery},
+volume = {2},
+number = {2},
+journal = {ACM Trans. Recomm. Syst.},
+articleno = {12},
+numpages = {24},
+}
+```
+
 ## Contact
 
 Should you have any questions, please contact Ivica Kostric at <ivica.kostric@uis.no>.
