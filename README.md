@@ -12,6 +12,7 @@
   - [Obtaining the dataset -- Alternative](#obtaining-the-dataset----alternative)
 - [Running question generation script](#running-question-generation-script)
 - [Running evaluation script](#running-evaluation-script)
+- [Citation](#citation)
 - [Contact](#contact)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
